@@ -37,6 +37,18 @@ annotate service.Books with @(
             Label : 'General Information',
             Target : '@UI.FieldGroup#GeneratedGroup',
         },
+        {
+            $Type : 'UI.ReferenceFacet',
+            Label : 'Entry Information',
+            ID : 'EntryInformation',
+            Target : '@UI.FieldGroup#EntryInformation',
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            Label : 'Chapters Information',
+            ID : 'ChaptersInformation',
+            Target : 'Chapters/@UI.LineItem#ChaptersInformation',
+        },
     ],
     UI.LineItem : [
         {
@@ -69,6 +81,31 @@ annotate service.Books with @(
         price,
         pages,
     ],
+    UI.HeaderInfo : {
+        TypeName : 'Book',
+        TypeNamePlural : 'Books',
+    },
+    UI.FieldGroup #EntryInformation : {
+        $Type : 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type : 'UI.DataField',
+                Value : createdBy,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : createdAt,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : modifiedAt,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : modifiedBy,
+            },
+        ],
+    },
 );
 
 annotate service.Books with {
@@ -96,4 +133,24 @@ annotate service.Books with {
 annotate service.Books with {
     pages @Common.Label : 'pages'
 };
+
+annotate service.Chapters with @(
+    UI.LineItem #ChaptersInformation : [
+        {
+            $Type : 'UI.DataField',
+            Value : book.Chapters.title,
+            Label : 'title',
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : book.Chapters.pages,
+            Label : 'pages',
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : book.Chapters.number,
+            Label : 'number',
+        },
+    ]
+);
 
